@@ -1,16 +1,19 @@
-package dev.artemon.crm.user.domain;
+package dev.artemon.crm.account.domain.model.VO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
+import java.util.Objects;
+
 @Embeddable
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Password {
 
     @Column(nullable = false)
     private String hash;
-
-    protected Password() {}
 
     public Password(String input) {
         this.hash = BCrypt.hashpw(input, BCrypt.gensalt());
@@ -21,15 +24,15 @@ public class Password {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof Password password)) return false;
-        return hash.equals(password.hash);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Password password)) return false;
+        return Objects.equals(hash, password.hash);
     }
 
     @Override
     public int hashCode() {
-        return hash.hashCode();
+        return Objects.hashCode(hash);
     }
 
     @Override
