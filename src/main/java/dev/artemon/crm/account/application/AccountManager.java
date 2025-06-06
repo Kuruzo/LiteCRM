@@ -1,9 +1,9 @@
 package dev.artemon.crm.account.application;
 
-import dev.artemon.crm.account.domain.model.Account;
-import dev.artemon.crm.account.domain.model.VO.Email;
-import dev.artemon.crm.account.domain.model.VO.Password;
-import dev.artemon.crm.account.domain.repo.AccountRepo;
+import dev.artemon.crm.account.domain.Account;
+import dev.artemon.crm.account.domain.Email;
+import dev.artemon.crm.account.domain.Password;
+import dev.artemon.crm.account.domain.AccountRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,19 +1,12 @@
-package dev.artemon.crm.account.domain.model.VO;
+package dev.artemon.crm.account.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.util.Objects;
 
-@Embeddable
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Password {
 
-    @Column(nullable = false)
-    private String hash;
+    private final String hash;
 
     public Password(String input) {
         this.hash = BCrypt.hashpw(input, BCrypt.gensalt());
