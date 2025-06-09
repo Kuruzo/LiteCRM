@@ -1,29 +1,35 @@
 package dev.artemon.crm.account.domain;
 
+import dev.artemon.crm.shared.Email;
+import dev.artemon.crm.shared.ID;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
-import java.util.UUID;
 
 @Getter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Account {
 
-    private final AccountId id;
+    private final ID<Account> id;
     private Email email;
     private Password password;
-    private Role role;
+    private final Role role;
     private boolean active;
 
-    public Account(Email email, Password password) {
-        this.id = new AccountId(UUID.randomUUID());
-        this.email = email;
-        this.password = password;
-        this.role = null;
-        this.active = true;
+    @NotNull
+    @Contract("_, _ -> new")
+    public static Account createNewAccount(Email email, Password password) {
+        return new Account(ID.newId(), email, password, null, true);
     }
 
-    public static Account fromData(AccountId id, Email email, Password password, Role role, boolean active) {
-
+    @NotNull
+    @Contract(value = "_, _, _, _, _ -> new", pure = true)
+    public static Account restore(ID<Account> id, Email email, Password password, Role role, boolean active) {
+        return new Account(id, email, password, role, active);
     }
 
     public void changeEmail(Email email) {
@@ -32,10 +38,6 @@ public class Account {
 
     public void changePassword(Password password) {
         this.password = password;
-    }
-
-    public void changeRole(Role role) {
-        this.role = role;
     }
 
     public void activate() {
